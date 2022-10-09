@@ -11,6 +11,7 @@ const client = new Client({
     password: "postgres",
     database: "postgres"
 });
+const PORT=3001
 
 client.connect();
 
@@ -120,6 +121,6 @@ app.post('/address', (req, res) => {
     })
 })
 
-app.listen('3001', () => {
-    console.log('Server is running on port 3001');
+app.listen(process.env.PORT || PORT, () => {
+    console.log('Server is running on port ' + PORT);
 })
