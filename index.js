@@ -35,9 +35,9 @@ app.use(express.json());
 //     database: "durianWaterUser"
 // })
 
-// app.get('/ping', (req, res) => {
-//     res.send('pong')
-// })
+app.get('/ping', (req, res) => {
+    res.send('pong')
+})
 
 // app.get('/users', (req, res) => {
 //     db.query("SELECT * FROM users", (err, result) =>{
