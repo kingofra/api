@@ -12,7 +12,6 @@ const client = new Client({
     database: "postgres"
 });
 const PORT=3001
-
 client.connect();
 
 client.query('Select * from users', (err, res)=>{
@@ -36,9 +35,9 @@ app.use(express.json());
 //     database: "durianWaterUser"
 // })
 
-app.get('/ping', (req, res) => {
-    res.send('pong')
-})
+// app.get('/ping', (req, res) => {
+//     res.send('pong')
+// })
 
 // app.get('/users', (req, res) => {
 //     db.query("SELECT * FROM users", (err, result) =>{
@@ -59,6 +58,20 @@ app.get('/ping', (req, res) => {
 //         }
 //     })
 // });
+
+app.post('/addaddress', (req, res) => {
+
+    const {user_id, name, number, village, lane, road, subdistrict, district, province, zipcode} = req.body
+    //console.log(user_id);
+    client.query("INSERT INTO address (user_id, name, number, village, lane, road, subdistrict, district, province, zipcode) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)", [user_id, name, number, village, lane, road, subdistrict, district, province, zipcode], (err, result, fields) => {
+        if (!err) {
+            console.log('success')
+            res.send({ status: 'add success' });
+        }else{
+            console.log(err)
+        }
+    })
+})
 
 // /localhost:3001/login
 app.post('/login', async (req, res) => {
@@ -99,9 +112,9 @@ app.post('/login', async (req, res) => {
 
 app.post('/garden', (req, res) => {
 
-    const userid = req.body.userid;
-    console.log(userid);
-    client.query("SELECT id FROM address WHERE userid=$1 ",[userid], (err, result, fields) =>{
+    const user_id = req.body.user_id;
+    console.log(user_id);
+    client.query("SELECT id FROM address WHERE user_id=$1 ",[user_id], (err, result, fields) =>{
         res.send({
             status: true,
             result: result});
