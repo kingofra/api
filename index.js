@@ -152,12 +152,13 @@ app.post('/history', (req, res) => {
 
     const user_id = req.body.user_id;
     console.log(user_id);
-    client.query("SELECT * FROM result WHERE user_id=$1 ",[user_id], (err, result, fields) =>{
+    client.query("SELECT * FROM result WHERE user_id=$1 BETWEEN $2 AND $3  ",[user_id,fromDate,toDate], (err, result, fields) =>{
         res.send({
             result: result});
         console.log(result);
     })
 })
+
 
 app.listen(process.env.PORT || PORT, () => {
     console.log('Server is running on port:' + PORT);
