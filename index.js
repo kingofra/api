@@ -151,10 +151,10 @@ app.post('/address', (req, res) => {
 app.post('/history', (req, res) => {
 
     const user_id = req.body.user_id;
-    const from = req.body.fromDate;
-    const to = req.body.toDate;
+    const fromDate = req.body.fromDate;
+    const toDate = req.body.toDate;
     console.log(user_id);
-    client.query("SELECT * FROM result WHERE user_id=$1 BETWEEN $2 AND $3  ",[user_id,from,to], (err, result, fields) =>{
+    client.query("SELECT * FROM result WHERE user_id=$1 BETWEEN $2 AND $3  ",[user_id,fromDate,toDate], (err, result, fields) =>{
         res.send({
             result: result});
         console.log(result);
