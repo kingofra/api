@@ -77,7 +77,7 @@ app.post('/register', (req, res) => {
 
     const {username, password, title, first_name, last_name } = req.body
     //console.log(user_id);
-    client.query("INSERT INTO users (username, password, title, first_name, last_name) VALUES ($1, $2, $3, $4, $5,)", [username, password, title, first_name, last_name], (err, result, fields) => {
+    client.query("INSERT INTO users (username, password, title, first_name, last_name) VALUES ($1, $2, $3, $4, $5)", [username, password, title, first_name, last_name], (err, result, fields) => {
         if (!err) {
             console.log('success')
             res.send({ status: 'register success' });
