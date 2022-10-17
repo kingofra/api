@@ -77,7 +77,7 @@ app.post('/addaddress', (req, res) => {
 app.put('/editaddress', (req, res) => {
     
     const {id,number, village, lane, road, subdistrict, district, province, zipcode} = req.body
-
+    console.log(id);
     client.query("UPDATE address SET number = $2, village = $3, lane = $4, road = $5, subdistrict = $6, district = $7, province = $8, zipcode = $9 WHERE id =$1", [id,number, village, lane, road, subdistrict, district, province, zipcode], (err, result, fields) => {
         if (!err) {
             console.log('success')
