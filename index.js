@@ -153,7 +153,7 @@ app.post('/history', (req, res) => {
     const user_id = req.body.user_id;
     const fromDate = req.body.fromDate;
     const toDate = req.body.toDate;
-    console.log(fromeDate);
+    console.log(fromDate);
     client.query("SELECT * FROM result BETWEEN $2 AND $3  ",[user_id,fromDate,toDate], (err, result, fields) =>{
         res.send({
             result: result});
