@@ -154,7 +154,7 @@ app.post('/history', (req, res) => {
     const fromDate = req.body.fromDate;
     const toDate = req.body.toDate;
     console.log(fromDate);
-    client.query("SELECT * FROM result WHERE user_id=$1 BETWEEN '2564/01/25' AND '2565/10/17'  ",[user_id,fromDate,toDate], (err, result, fields) =>{
+    client.query("SELECT * FROM result WHERE user_id=$1 BETWEEN '2564-01-25' AND '2565-10-17'  ",[user_id,fromDate,toDate], (err, result, fields) =>{
         res.send({
             result: result});
         console.log(result);
