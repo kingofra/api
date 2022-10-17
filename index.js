@@ -86,7 +86,6 @@ app.put('/editaddress', (req, res) => {
         }else{
             console.log(err)
         }
-        response.status(200).send(`User modified with ID: ${id}`)
     })
 })
 
