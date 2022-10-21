@@ -169,7 +169,7 @@ app.post('/history', (req, res) => {
     const fromDate = req.body.fromDate;
     const toDate = req.body.toDate;
     console.log(toDate);
-    client.query("SELECT * FROM result WHERE user_id=$1 AND date>=$2 AND date<=$3 ",[user_id,fromDate,toDate], (err, result, fields) =>{
+    client.query("SELECT garden_name AND date AND time FROM result WHERE user_id=$1 AND date>=$2 AND date<=$3 ",[user_id,fromDate,toDate], (err, result, fields) =>{
         res.send({
             result: result});
         console.log(result);
