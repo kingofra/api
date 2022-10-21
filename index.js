@@ -177,6 +177,17 @@ app.post('/history', (req, res) => {
 })
 
 
+app.post('/getresult', (req, res) => {
+
+    const result_id = req.body.result_id;
+    client.query("SELECT * FROM result WHERE result_id=$1 ",[result_id], (err, result, fields) =>{
+        res.send({
+            result: result});
+        console.log(result);
+    })
+})
+
+
 app.listen(process.env.PORT || PORT, () => {
     console.log('Server is running on port:' + PORT);
 })
