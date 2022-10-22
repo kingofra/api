@@ -124,8 +124,9 @@ app.post('/checkemail', (req,res) => {
 app.post('/forgotpassword', (req,res) => {
     const passgen = genPassword(5)
     const email = req.body
-
+    console.log(passgen);
     client.query("UPDATE users SET password = $1 WHERE email = $2", [passgen,email], (err, result, fields) =>{
+        console.log(result);
         if (!err) {
             console.log('success')
             res.send({ status: true });
