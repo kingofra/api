@@ -137,26 +137,26 @@ app.put('/forgotpassword', (req,res) => {
         }
     })
 
-    const smtpTransport = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: "durian.recommend@gmail.com",
-          pass: "durian1234",
-        }
-    });
+//     const smtpTransport = nodemailer.createTransport({
+//         service: "gmail",
+//         auth: {
+//           user: "durian.recommend@gmail.com",
+//           pass: "durian1234",
+//         }
+//     });
 
-    let mailOptions = {
-        from: "sender@gmail.com",
-        to: `${req.params.email}`,
-        subject: "ข้อความแจ้งเตือนการเปลี่ยนรหัสผ่าน",
-        text: `ข้อความแจ้งเตือนการเปลี่ยนรหัสผ่าน`,
-        html: `<b>คุณได้ทำการแก้ไขรหัสผ่าน ผ่านฟังก์ชันลืมรหัสผ่าน<br/>โดยรหัสผ่านใหม่ที่คุณได้รับ คือ ${passgen}</b>`,
-    };
+//     let mailOptions = {
+//         from: "sender@gmail.com",
+//         to: `${req.params.email}`,
+//         subject: "ข้อความแจ้งเตือนการเปลี่ยนรหัสผ่าน",
+//         text: `ข้อความแจ้งเตือนการเปลี่ยนรหัสผ่าน`,
+//         html: `<b>คุณได้ทำการแก้ไขรหัสผ่าน ผ่านฟังก์ชันลืมรหัสผ่าน<br/>โดยรหัสผ่านใหม่ที่คุณได้รับ คือ ${passgen}</b>`,
+//     };
 
-    smtpTransport.sendMail(mailOptions, function (err, info) {
-        if (err) console.log(err);
-        else res.send("Send Email Complete");
-    });
+//     smtpTransport.sendMail(mailOptions, function (err, info) {
+//         if (err) console.log(err);
+//         else res.send("Send Email Complete");
+//     });
 })
 
 // /localhost:3001/login
