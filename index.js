@@ -103,7 +103,7 @@ app.post('/register', (req, res) => {
 })
 
 // checkemail
-app.get('/checkemail', (req,res) => {
+app.post('/checkemail', (req,res) => {
 
     const email = req.body.email;
     console.log(email);
