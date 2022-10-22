@@ -126,7 +126,7 @@ app.post('/forgotpassword', (req,res) => {
     const email = req.body
     console.log(passgen);
     console.log(email);
-    client.query("SELECT * WHERE email = $2", [passgen,email], (err, result, fields) =>{
+    client.query("SELECT * WHERE email = $1", [email], (err, result, fields) =>{
       console.log(result);  
     })
 //     client.query("UPDATE users SET password = 1234 WHERE email = $2", [passgen,email], (err, result, fields) =>{
