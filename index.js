@@ -121,7 +121,7 @@ app.post('/checkemail', (req,res) => {
 })
 
 //forgotpassword
-app.post('/forgotpassword', (req,res) => {
+app.put('/forgotpassword', (req,res) => {
     const passgen = genPassword(5)
     const email = req.body
     console.log(passgen);
