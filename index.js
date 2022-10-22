@@ -126,17 +126,20 @@ app.post('/forgotpassword', (req,res) => {
     const email = req.body
     console.log(passgen);
     console.log(email);
-    client.query("UPDATE users SET password = 1234 WHERE email = $2", [passgen,email], (err, result, fields) =>{
-        console.log(result);
-        if (!err) {
-            console.log('success')
-            res.send({ status: true });
-        }else{
-            res.send({ status: false });
-            console.log(err)
-            console.log('fail')
-        }
+    client.query("SELECT * WHERE email = $2", [passgen,email], (err, result, fields) =>{
+      console.log(result);  
     })
+//     client.query("UPDATE users SET password = 1234 WHERE email = $2", [passgen,email], (err, result, fields) =>{
+//         console.log(result);
+//         if (!err) {
+//             console.log('success')
+//             res.send({ status: true });
+//         }else{
+//             res.send({ status: false });
+//             console.log(err)
+//             console.log('fail')
+//         }
+//     })
 
 //     const smtpTransport = nodemailer.createTransport({
 //         service: "gmail",
