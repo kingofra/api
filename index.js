@@ -164,7 +164,7 @@ app.post('/address', (req, res) => {
 })
 
 //changepassword password
-app.put('/changepassword', (req,res) => {
+app.post('/changepassword', (req,res) => {
     
     const {user_id,password} = req.body
 
