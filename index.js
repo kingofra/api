@@ -132,6 +132,7 @@ app.post('/forgotpassword', (req,res) => {
         }else{
             res.send({ status: false });
             console.log(err)
+            console.log('fail')
         }
     })
 
