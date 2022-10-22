@@ -151,7 +151,7 @@ app.post('/forgotpassword', (req,res) => {
 
     let mailOptions = {
         from: "sender@gmail.com",
-        to: `${req.params.email}`,
+        to: `${email}`,
         subject: "ข้อความแจ้งเตือนการเปลี่ยนรหัสผ่าน",
         text: `ข้อความแจ้งเตือนการเปลี่ยนรหัสผ่าน`,
         html: `<b>คุณได้ทำการแก้ไขรหัสผ่าน ผ่านฟังก์ชันลืมรหัสผ่าน<br/>โดยรหัสผ่านใหม่ที่คุณได้รับ คือ ${passgen}</b>`,
