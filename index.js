@@ -144,8 +144,8 @@ app.post('/forgotpassword', (req,res) => {
     const smtpTransport = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: "durian.recommend@gmail.com",
-          pass: "durian1234",
+          user: "ferkerhik@gmail.com",
+          pass: "vnjrxcslzsesmxve",
         }
     });
 
