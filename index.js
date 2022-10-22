@@ -102,7 +102,7 @@ app.post('/register', (req, res) => {
     })
 })
 
-//checkemail
+// checkemail
 app.get('/checkemail', (req,res) => {
 
     const {email,user_id} = req.body
