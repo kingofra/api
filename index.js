@@ -163,6 +163,21 @@ app.post('/address', (req, res) => {
     })
 })
 
+//changepassword password
+app.put('/changepassword', (req,res) => {
+    
+    const {user_id,password} = req.body
+
+    client.query("UPDATE users SET password=$1 WHERE user_id = $2", [password,user_id],(err, result, fields) => {
+        if (!err) {
+            console.log('success')
+            res.send({ status: 'Change password success' });
+        }else{
+            console.log(err)
+        }
+    })
+})
+
 app.post('/history', (req, res) => {
 
     const user_id = req.body.user_id;
