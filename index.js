@@ -119,6 +119,43 @@ app.post('/checkemail', (req,res) => {
     })
 })
 
+//forgotpassword
+app.post('/forgotpassword', (req,res) => {
+    const passgen = genPassword(5)
+    const email = req.body
+
+    client.query(`UPDATE users SET password = '${passgen}' WHERE email = '${req.params.email}';`, [email], (err, result, fields) =>{
+        if (!err) {
+            console.log('success')
+            res.send({ status: true });
+        }else{
+            res.send({ status: false });
+            console.log(err)
+        }
+    })
+
+    const smtpTransport = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: "ferkerhik@gmail.com",
+          pass: "chan_0295",
+        }
+    });
+
+    let mailOptions = {
+        from: "sender@gmail.com",
+        to: `${req.params.email}`,
+        subject: "ข้อความแจ้งเตือนการเปลี่ยนรหัสผ่าน",
+        text: `ข้อความแจ้งเตือนการเปลี่ยนรหัสผ่าน`,
+        html: `<b>คุณได้ทำการแก้ไขรหัสผ่าน ผ่านฟังก์ชันลืมรหัสผ่าน<br/>โดยรหัสผ่านใหม่ที่คุณได้รับ คือ ${passgen}</b>`,
+    };
+
+    smtpTransport.sendMail(mailOptions, function (err, info) {
+        if (err) console.log(err);
+        else res.send("Send Email Complete");
+    });
+})
+
 // /localhost:3001/login
 app.post('/login', async (req, res) => {
 
@@ -218,6 +255,19 @@ app.post('/getresult', (req, res) => {
         console.log(result);
     })
 })
+
+function genPassword(length) {
+    var result = [];
+    var characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result.push(
+        characters.charAt(Math.floor(Math.random() * charactersLength))
+      );
+    }
+    return result.join("");
+}
 
 
 app.listen(process.env.PORT || PORT, () => {
