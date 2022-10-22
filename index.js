@@ -106,8 +106,8 @@ app.post('/register', (req, res) => {
 app.get('/checkemail', (req,res) => {
 
     const {email,user_id} = req.body
-
-    client.query("SELECT email from users WHERE email=$1 AND user_id=$2", [email,user_id], (err,result,fields) =>{
+    conole.log(email)
+    client.query("SELECT email from users WHERE email=$1", [email], (err,result,fields) =>{
         console.log(result);
         if (!err) {
             console.log('success')
