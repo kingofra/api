@@ -102,6 +102,21 @@ app.post('/register', (req, res) => {
     })
 })
 
+//checkemail
+app.get('/checkemail', (req,res) => {
+
+    const {email,user_id} = req.body
+
+    client.query("SELECT email from users WHERE email=$1 AND user_id=$2", [email,user_id], (err,result,fields) =>{
+        if (!err) {
+            console.log('success')
+            res.send({ status: 'success' });
+        }else{
+            console.log(err)
+        }
+    })
+})
+
 // /localhost:3001/login
 app.post('/login', async (req, res) => {
 
