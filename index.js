@@ -110,8 +110,9 @@ app.get('/checkemail', (req,res) => {
     client.query("SELECT email from users WHERE email=$1 AND user_id=$2", [email,user_id], (err,result,fields) =>{
         if (!err) {
             console.log('success')
-            res.send({ status: 'success' });
+            res.send({ status: true });
         }else{
+            res.send({ status: false });
             console.log(err)
         }
     })
