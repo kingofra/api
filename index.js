@@ -109,7 +109,7 @@ app.post('/checkemail', (req,res) => {
     console.log(email);
     client.query("SELECT email from users WHERE email=$1", [email], (err,result,fields) =>{
         console.log(result);
-        if (!err) {
+        if (result.rowCount>0) {
             console.log('success')
             res.send({ status: true });
         }else{
