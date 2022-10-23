@@ -207,7 +207,7 @@ app.post('/garden', (req, res) => {
 
     const user_id = req.body.user_id;
     console.log(user_id);
-    client.query("SELECT id FROM address WHERE user_id=$1 ",[user_id], (err, result, fields) =>{
+    client.query("SELECT id AND name FROM address WHERE user_id=$1 ",[user_id], (err, result, fields) =>{
         res.send({
             status: true,
             result: result});
