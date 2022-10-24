@@ -95,12 +95,12 @@ app.post('/csvAll',async (req, res) => {
     const fromDate = req.body.fromDate;
     const toDate = req.body.toDate;
 
-    const sqlUser = await client.query("SELECT us.title, us.name, us.email FROM users as us WHERE us.user_id = $1", [user_id]);
+    const sqlUser = await client.query("SELECT us.title, us.first_name,us.last_name, us.email FROM users as us WHERE us.user_id = $1", [user_id]);
     //let responseUser = await connect.promiseQuery(sqlUser);
     // console.log(req.body.email)
     const userData = {
       title: sqlUser[0].title,
-      name: sqlUser[0].name,
+      name: sqlUser[0].first_name + " " + sqlUser[0].last_name,
       email: sqlUser[0].email,
     }
   
