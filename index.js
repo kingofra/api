@@ -109,7 +109,7 @@ app.put('/editaddress', (req, res) => {
 app.post('/deletegarden', (req, res) => {
 
     const garden_id = req.body.garden_id
-    //console.log(user_id);
+    console.log(garden_id);
     client.query("DELETE FROM address WHERE id = $1", [garden_id], (err, result, fields) => {
         if (!err) {
             console.log('delete success')
