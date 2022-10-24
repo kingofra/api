@@ -89,6 +89,125 @@ app.post('/addresult', (req, res) => {
     })
 })
 
+//csv
+app.post('/csv',async (req, res) => {
+    const user_id = req.body.user_id;
+    const result_id = req.body.result_id;
+
+    const sqlUser = await client.query("SELECT us.title, us.first_name,us.last_name, us.email FROM users as us WHERE us.user_id = $1", [user_id]);
+    //let responseUser = await connect.promiseQuery(sqlUser);
+    //console.log(sqlUser.rows[0]);
+    const userData = {
+      title: sqlUser.rows[0].title,
+      name: sqlUser.rows[0].first_name + " " + sqlUser.rows[0].last_name,
+      email: sqlUser.rows[0].email,
+    }
+  
+    const responseWater = await client.query(`SELECT rs.result_id, rs.date ,rs.time, rs.garden_name, rs.temperature,
+                      rs.moisture_air,rs.moisture_soil,rs.rs,rs.kc,rs.radius,rs.water_volume,
+                      rs.watering, rs.vpd, rs.recommend
+                      FROM result as rs
+                      WHERE rs.result_id = $1
+                      ORDER BY rs.date desc, rs.time desc`,[user_id,fromDate,toDate]);
+    //let responseA004 = await connect.promiseQuery(sqlA004);
+  
+    const csvA004 = await ConvertToCSV(responseWater.rows);
+  
+    transport = {
+      service: "gmail",
+      auth: {
+        user: "ferkerhik@gmail.com",
+        pass: "vnjrxcslzsesmxve",
+      },
+    };
+    const smtpTransport = nodemailer.createTransport(transport);
+  
+    let subject = "สรุปผลประวัติการวิเคราะห์";
+    let mailOptions = {
+      from: "sender@gmail.com",
+      to: `${userData.email}`,
+      subject: `${subject}`,
+      text: `เอกสาร${subject} \r\nจากผู้วิเคราะห์ ${userData.title} ${userData.name}\r\nอีเมล์ติดต่อ : ${userData.email}`,
+      html: `<b>เอกสาร${subject} <br/>จากผู้วิเคราะห์ ${userData.title} ${userData.name}<br/>อีเมล์ติดต่อ : ${userData.email}</b>`,
+      attachments: [
+        {
+          filename: `ปริมาณน้ำ.csv`,
+          content: csvA004,
+          contentType: 'text/csv; charset=utf-8'
+        },
+      ],
+    };
+    smtpTransport.sendMail(mailOptions, function (err, info) {
+      if (err) console.log(err);
+      else {
+        console.log("send csv");
+        res.status(200).json("Send Email Complete")};
+    });
+  })
+
+//ConvertToCSV
+async function ConvertToCSV(objArray) {
+    let newObj = objArray;
+    // console.log(objArray)
+    if (objArray.length == 0) {
+      console.log("objarray == 0");
+      const csvString = [
+        ["วันที่", "เวลา", "ธาตุอาหาร", "คำแนะนำ"],
+        ["", "", "", ""]
+      ]
+        .map((e) => e.join(","))
+        .join("\n");
+  
+      // console.log(csvString);
+      return csvString;
+    }
+    else {
+      console.log("objarray > 0");
+      //console.log(objArray);
+      let current_date = "", current_time = ""
+      objArray.map((item, index) => {
+        let newDetail = newObj;
+        let date = "", time = ""
+        if (item.date != current_date || item.time != current_time) {
+          date = item.date
+          current_date = item.date
+          time = item.time
+          current_time = item.time
+        }
+        let new_recommend = newDetail[index].recommend;
+        new_recommend = new_recommend.split("\n").join("\t");
+        new_recommend = new_recommend.split(",").join(" ");
+        newDetail[index] = {
+          ...newDetail[index],
+          recommend: new_recommend,
+          date: date,
+          time: time
+        };
+        newObj = newDetail;
+      });
+        const csvString = [
+          ["วันที่", "เวลา", "ชื่อสวน", "อุณหภูมิ", "ความชื้นในอากาศ", "ความชื้นในดิน", "ความเข้มของแสง", "ระยะการเจริญเติบโต", "รัศมีทรงพุ่ม", "ปริมาณน้ำจากหัวจ่ายน้ำ","ปริมาณน้ำ / ต้น", "ความแห้งของอากาศ", "คำแนะนำเพิ่มเติม"],
+          ...newObj.map((item) => [
+            item.date, item.time,item.garden_name,
+            `${item.temperature} °C`,
+            `${item.moisture_air} %`,
+            `${item.moisture_soil} %`,
+            `${item.rs} Lux`,
+            `${item.kc} `,
+            `${item.radius} `,
+            `${item.water_volume} ลิตร / ชม.`,
+            `${item.watering} ลิตร`,
+            `${item.vpd} Kpa`,
+            item.recommend,
+          ]),
+        ]
+          .map((e) => e.join(","))
+          .join("\n");
+        // console.log(csvString);
+        return csvString;
+    }
+ }
+
 //csvAll
 app.post('/csvAll',async (req, res) => {
     const user_id = req.body.user_id;
@@ -104,7 +223,7 @@ app.post('/csvAll',async (req, res) => {
       email: sqlUser.rows[0].email,
     }
   
-    const responseWater = await client.query(`SELECT rs.result_id, rs.date, rs.time, rs.watering, rs.vpd, rs.recommend
+    const responseWater = await client.query(`SELECT rs.result_id, rs.date, rs.time,rs.garden_name, rs.watering, rs.vpd, rs.recommend
                       FROM result as rs
                       WHERE rs.user_id = $1 AND rs.date >= $2 AND rs.date <= $3
                       ORDER BY rs.date desc, rs.time desc`,[user_id,fromDate,toDate]);
@@ -185,9 +304,9 @@ async function ConvertToCSVAll(objArray) {
         newObj = newDetail;
       });
         const csvString = [
-          ["วันที่", "เวลา", "ปริมาณน้ำ / ต้น", "ความแห้งของอากาศ", "คำแนะนำเพิ่มเติม"],
+          ["วันที่", "เวลา","ชื่อสวน", "ปริมาณน้ำ / ต้น", "ความแห้งของอากาศ", "คำแนะนำเพิ่มเติม"],
           ...newObj.map((item) => [
-            item.date, item.time,
+            item.date, item.time,item.garden_name,
             `${item.watering} ลิตร`,
             `${item.vpd} Kpa`,
             item.recommend,
