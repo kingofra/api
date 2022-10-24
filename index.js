@@ -110,7 +110,7 @@ app.post('/csvAll',async (req, res) => {
                       ORDER BY rs.date desc, rs.time desc`,[user_id,fromDate,toDate]);
     //let responseA004 = await connect.promiseQuery(sqlA004);
   
-    const csvA004 = await ConvertToCSVAll(responseWater);
+    const csvA004 = await ConvertToCSVAll(responseWater.rows);
   
     transport = {
       service: "gmail",
@@ -162,7 +162,7 @@ async function ConvertToCSVAll(objArray) {
     }
     else {
       console.log("objarray > 0");
-      console.log(objArray);
+      //console.log(objArray);
       let current_date = "", current_time = ""
       objArray.map((item, index) => {
         let newDetail = newObj;
