@@ -108,7 +108,7 @@ app.post('/csv',async (req, res) => {
                       rs.watering, rs.vpd, rs.recommend
                       FROM result as rs
                       WHERE rs.result_id = $1
-                      ORDER BY rs.date desc, rs.time desc`,[user_id,fromDate,toDate]);
+                      ORDER BY rs.date desc, rs.time desc`,[user_id]);
     //let responseA004 = await connect.promiseQuery(sqlA004);
   
     const csvA004 = await ConvertToCSV(responseWater.rows);
