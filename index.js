@@ -162,27 +162,28 @@ async function ConvertToCSVAll(objArray) {
     }
     else {
       console.log("objarray > 0");
+      console.log(objArray);
       let current_date = "", current_time = ""
-        objArray.map((item, index) => {
-          let newDetail = newObj;
-          let date = "", time = ""
-          if (item.date != current_date || item.time != current_time) {
-            date = item.date
-            current_date = item.date
-            time = item.time
-            current_time = item.time
-          }
-          let new_recommend = newDetail[index].recommend;
-          new_recommend = new_recommend.split("\n").join("\t");
-          new_recommend = new_recommend.split(",").join(" ");
-          newDetail[index] = {
-            ...newDetail[index],
-            recommend: new_recommend,
-            date: date,
-            time: time
-          };
-          newObj = newDetail;
-        });
+      objArray.map((item, index) => {
+        let newDetail = newObj;
+        let date = "", time = ""
+        if (item.date != current_date || item.time != current_time) {
+          date = item.date
+          current_date = item.date
+          time = item.time
+          current_time = item.time
+        }
+        let new_recommend = newDetail[index].recommend;
+        new_recommend = new_recommend.split("\n").join("\t");
+        new_recommend = new_recommend.split(",").join(" ");
+        newDetail[index] = {
+          ...newDetail[index],
+          recommend: new_recommend,
+          date: date,
+          time: time
+        };
+        newObj = newDetail;
+      });
         const csvString = [
           ["วันที่", "เวลา", "ปริมาณน้ำ / ต้น", "ความแห้งของอากาศ", "คำแนะนำเพิ่มเติม"],
           ...newObj.map((item) => [
