@@ -106,7 +106,7 @@ app.post('/csvAll',async (req, res) => {
   
     const responseWater = await client.query(`SELECT rs.result_id, rs.date, rs.time, rs.watering, rs.vpd, rs.recommend
                       FROM result as rs
-                      WHERE rs.user_id = $1 AND rs.date BETWEEN '$2' AND '$3'
+                      WHERE rs.user_id = $1 AND rs.date >= $2 AND rs.date <= $3
                       ORDER BY rs.date desc, rs.time desc`,[user_id,fromDate,toDate]);
     //let responseA004 = await connect.promiseQuery(sqlA004);
   
