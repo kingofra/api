@@ -93,7 +93,7 @@ app.post('/addresult', (req, res) => {
 app.post('/csv',async (req, res) => {
     const user_id = req.body.user_id;
     const result_id = req.body.result_id;
-
+    
     const sqlUser = await client.query("SELECT us.title, us.first_name,us.last_name, us.email FROM users as us WHERE us.user_id = $1", [user_id]);
     //let responseUser = await connect.promiseQuery(sqlUser);
     //console.log(sqlUser.rows[0]);
@@ -108,7 +108,7 @@ app.post('/csv',async (req, res) => {
                       rs.watering, rs.vpd, rs.recommend
                       FROM result as rs
                       WHERE rs.result_id = $1
-                      ORDER BY rs.date desc, rs.time desc`,[user_id]);
+                      ORDER BY rs.date desc, rs.time desc`,[result_id]);
     //let responseA004 = await connect.promiseQuery(sqlA004);
   
     const csvA004 = await ConvertToCSV(responseWater.rows);
@@ -122,7 +122,7 @@ app.post('/csv',async (req, res) => {
     };
     const smtpTransport = nodemailer.createTransport(transport);
   
-    let subject = "สรุปผลประวัติการวิเคราะห์";
+    let subject = "สรุปผลประวัติการวิเคราะห์น้ำ";
     let mailOptions = {
       from: "sender@gmail.com",
       to: `${userData.email}`,
