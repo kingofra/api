@@ -174,12 +174,67 @@ async function ConvertToCSV(objArray) {
           time = item.time
           current_time = item.time
         }
+        let new_kc = newDetail[index].kc;
+        if(new_kc=='1'){
+            new_kc = 'ระยะกิ่ง ก้าน ใบ';
+        }
+        else if(new_kc == '2'){
+            new_kc = 'ระยะชักนำดอก';
+        }
+        else if(new_kc == '3'){
+            new_kc = 'ระยะออกดอก';
+        }
+        else if(new_kc == '4'){
+            new_kc = 'ระยะติดผล';
+        }
+        else if(new_kc == '5'){
+            new_kc = 'ระยะผลอ่อน';
+        }
+        else if(new_kc == '6'){
+            new_kc = 'ระยะพัฒนาของผล';
+        }
+        else if(new_kc == '7'){
+            new_kc = 'ระยะเริ่มแก่-ก่อนเก็บเกี่ยว';
+        }
+        let new_radius = newDetail[index].radius;
+        if(new_radius == '1'){
+            new_radius = '0.5 เมตร';
+        }
+        else if(new_radius == '2'){
+            new_radius = '1.0 เมตร';
+        }
+        else if(new_radius == '3'){
+            new_radius = '1.5 เมตร';
+        }
+        else if(new_radius == '4'){
+            new_radius = '2.0 เมตร';
+        }
+        else if(new_radius == '5'){
+            new_radius = '2.5 เมตร';
+        }
+        else if(new_radius == '6'){
+            new_radius = '3.0 เมตร';
+        }
+        else if(new_radius == '7'){
+            new_radius = '3.5 เมตร';
+        }
+        else if(new_radius == '8'){
+            new_radius = '4.0 เมตร';
+        }
+        else if(new_radius == '9'){
+            new_radius = '4.5 เมตร';
+        }
+        else if(new_radius == '10'){
+            new_radius = '5.0 เมตร';
+        }
         let new_recommend = newDetail[index].recommend;
         new_recommend = new_recommend.split("\n").join("\t");
         new_recommend = new_recommend.split(",").join(" ");
         newDetail[index] = {
           ...newDetail[index],
           recommend: new_recommend,
+          kc:new_kc,
+          radius:new_radius,
           date: date,
           time: time
         };
@@ -188,7 +243,7 @@ async function ConvertToCSV(objArray) {
         const csvString = [
           ["วันที่", "เวลา", "ชื่อสวน", "อุณหภูมิ", "ความชื้นในอากาศ", "ความชื้นในดิน", "ความเข้มของแสง", "ระยะการเจริญเติบโต", "รัศมีทรงพุ่ม", "ปริมาณน้ำจากหัวจ่ายน้ำ","ปริมาณน้ำ / ต้น", "ความแห้งของอากาศ", "คำแนะนำเพิ่มเติม"],
           ...newObj.map((item) => [
-            item.date, item.time,item.garden_name,
+            item.date, item.time,item.garden_name
             `${item.temperature} °C`,
             `${item.moisture_air} %`,
             `${item.moisture_soil} %`,
@@ -207,6 +262,7 @@ async function ConvertToCSV(objArray) {
         return csvString;
     }
  }
+
 
 //csvAll
 app.post('/csvAll',async (req, res) => {
