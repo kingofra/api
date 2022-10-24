@@ -243,7 +243,7 @@ async function ConvertToCSV(objArray) {
         const csvString = [
           ["วันที่", "เวลา", "ชื่อสวน", "อุณหภูมิ", "ความชื้นในอากาศ", "ความชื้นในดิน", "ความเข้มของแสง", "ระยะการเจริญเติบโต", "รัศมีทรงพุ่ม", "ปริมาณน้ำจากหัวจ่ายน้ำ","ปริมาณน้ำ / ต้น", "ความแห้งของอากาศ", "คำแนะนำเพิ่มเติม"],
           ...newObj.map((item) => [
-            item.date, item.time,item.garden_name
+            item.date, item.time,item.garden_name,
             `${item.temperature} °C`,
             `${item.moisture_air} %`,
             `${item.moisture_soil} %`,
