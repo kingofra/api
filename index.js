@@ -105,6 +105,22 @@ app.put('/editaddress', (req, res) => {
     })
 })
 
+//delete garden
+app.post('/deletegarden', (req, res) => {
+
+    const garden_id = req.body.garden_id
+    //console.log(user_id);
+    client.query("DELETE FROM address WHERE id = $1", [garden_id], (err, result, fields) => {
+        if (!err) {
+            console.log('delete success')
+            res.send({ status: 'delete success' });
+        }else{
+            console.log('delete error')
+            console.log(err)
+        }
+    })
+})
+
 app.post('/register', (req, res) => {
 
     const {username, password, title, first_name, last_name } = req.body
