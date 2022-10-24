@@ -110,7 +110,7 @@ app.post('/deletegarden', (req, res) => {
 
     const garden_id = req.body.garden_id
     //console.log(user_id);
-    client.query("DELETE * FROM address WHERE id = $1", [garden_id], (err, result, fields) => {
+    client.query("DELETE FROM address WHERE id = $1", [garden_id], (err, result, fields) => {
         if (!err) {
             console.log('delete success')
             res.send({ status: 'delete success' });
