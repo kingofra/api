@@ -78,7 +78,7 @@ app.post('/addresult', (req, res) => {
 
     const {user_id, date, time, garden_name, temperature, moisture_air, moisture_soil, rs, kc, radius,water_volume,watering,vpd,recommend} = req.body
     //console.log(user_id);
-    client.query("INSERT INTO address (user_id, date, time, garden_name, temperature, moisture_air, moisture_soil, rs, kc, radius,water_volume,watering,vpd,recommend) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)", [user_id, date, time, garden_name, temperature, moisture_air, moisture_soil, rs, kc, radius,water_volume,watering,vpd,recommend], (err, result, fields) => {
+    client.query("INSERT INTO result (user_id, date, time, garden_name, temperature, moisture_air, moisture_soil, rs, kc, radius,water_volume,watering,vpd,recommend) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)", [user_id, date, time, garden_name, temperature, moisture_air, moisture_soil, rs, kc, radius,water_volume,watering,vpd,recommend], (err, result, fields) => {
         if (!err) {
             console.log('add success')
             res.send({ status: 'add success' });
