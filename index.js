@@ -90,7 +90,7 @@ app.post('/addresult', (req, res) => {
 })
 
 //csvAll
-app.post('/csvAll', async (req, res) => {
+app.post('/csvAll',(req, res) => {
     const user_id = req.body.user_id;
     const fromDate = req.body.fromDate;
     const toDate = req.body.toDate;
