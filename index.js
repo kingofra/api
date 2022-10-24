@@ -124,7 +124,7 @@ app.post('/csvAll',async (req, res) => {
     let subject = "สรุปผลประวัติการวิเคราะห์";
     let mailOptions = {
       from: "sender@gmail.com",
-      to: `${email}`,
+      to: `${userData.email}`,
       subject: `${subject}`,
       text: `เอกสาร${subject} \r\nจากผู้วิเคราะห์ ${userData.title} ${userData.name}\r\nอีเมล์ติดต่อ : ${userData.email}`,
       html: `<b>เอกสาร${subject} <br/>จากผู้วิเคราะห์ ${userData.title} ${userData.name}<br/>อีเมล์ติดต่อ : ${userData.email}</b>`,
