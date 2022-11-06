@@ -6,7 +6,7 @@ const nodemailer = require('nodemailer');
 const { Client } = require('pg');
 
 const client = new Client({
-    host: "water.cvizemr2ibhx.ap-northeast-1.rds.amazonaws.com",
+    host: "wateranalyze.cxbsylbmgqtz.ap-northeast-1.rds.amazonaws.com",
     user: "postgres",
     port: 5432,
     password: "postgres",
