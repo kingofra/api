@@ -587,7 +587,7 @@ app.post('/getresult', (req, res) => {
 app.post('/gettotalWater', (req, res) => {
     const user_id = req.body.user_id;
     const month = req.body.month;
-    client.query("SELECT watering AND day FROM result WHERE month=$1 AND user_id=$2 ",[month,user_id], (err, result, fields) =>{
+    client.query("SELECT watering , day FROM result WHERE month=$1 AND user_id=$2 ",[month,user_id], (err, result, fields) =>{
         if (!err) {
             console.log('success')
             res.send({result: result});
