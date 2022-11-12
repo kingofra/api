@@ -568,6 +568,7 @@ app.post('/history', (req, res) => {
     client.query("SELECT * FROM result WHERE user_id=$1 AND date>=$2 AND date<=$3 ",[user_id,fromDate,toDate], (err, result, fields) =>{
         res.send({
             result: result});
+        console.log
         console.log(result);
     })
 })
@@ -587,8 +588,12 @@ app.post('/gettotalWater', (req, res) => {
     const user_id = req.body.user_id;
     const month = req.body.month;
     client.query("SELECT watering AND day FROM result WHERE month=$1 AND user_id=$2 ",[month,user_id], (err, result, fields) =>{
-        res.send({
-            result: result});
+        if (!err) {
+            console.log('success')
+            res.send({result: result});
+        }else{
+            console.log(err)
+        }
     })
 })
 
