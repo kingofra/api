@@ -460,10 +460,7 @@ app.post('/forgotpassword', (req,res) => {
     })
     
     client.query("SELECT username from users WHERE email=$1", [email], (err,result,fields) =>{
-        console.log("here here here here here here here here here here here here here here here here ");
-        console.log(result);
         username = result.rows[0].username;
-        console.log(username);
 //         if (result.rowCount>0) {
 //             console.log('success')
 //             res.send({ status: true });
@@ -486,7 +483,7 @@ app.post('/forgotpassword', (req,res) => {
         to: `${email}`,
         subject: "ข้อความแจ้งเตือนการเปลี่ยนรหัสผ่าน",
         text: `ข้อความแจ้งเตือนการเปลี่ยนรหัสผ่าน`,
-        html: `<b>คุณได้ทำการแก้ไขรหัสผ่าน ผ่านฟังก์ชันลืมรหัสผ่าน<br/>โดยรหัสผ่านใหม่ที่คุณได้รับ คือ ${passgen}</b>`,
+        html: `<b>คุณได้ทำการแก้ไขรหัสผ่าน ผ่านฟังก์ชันลืมรหัสผ่าน<br/>โดยชื่อบัญชีผู้ใช้ของคุณคือ ${username} <br/>และรหัสผ่านใหม่ที่คุณได้รับ คือ ${passgen}</b>`,
     };
 
     smtpTransport.sendMail(mailOptions, function (err, info) {
