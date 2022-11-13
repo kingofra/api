@@ -441,24 +441,24 @@ app.post('/checkemail', (req,res) => {
 app.post('/forgotpassword', (req,res) => {
     const passgen = genPassword(5)
     const email = req.body.email;
-    let user_result=getUsername(email);
+    const user_result=getUsername(email);
     console.log(passgen);
     console.log(email);
 //     client.query("SELECT * WHERE email = $1", [email], (err, result, fields) =>{
 //       console.log(result);  
 //     })
     
-    client.query("SELECT username from users WHERE email=$1", [email], (err,result,fields) =>{
-        user_result = result.rows[0].username;
-        console.log(user_result);
-//         if (result.rowCount>0) {
-//             console.log('success')
-//             res.send({ status: true });
-//         }else{
-//             res.send({ status: false });
-//             console.log(err)
-//         }
-    })
+//     client.query("SELECT username from users WHERE email=$1", [email], (err,result,fields) =>{
+//         user_result = result.rows[0].username;
+//         console.log(user_result);
+// //         if (result.rowCount>0) {
+// //             console.log('success')
+// //             res.send({ status: true });
+// //         }else{
+// //             res.send({ status: false });
+// //             console.log(err)
+// //         }
+//     })
     
     client.query("UPDATE users SET password = $1 WHERE email = $2", [passgen,email], (err, result, fields) =>{
         console.log(result);
