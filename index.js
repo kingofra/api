@@ -437,11 +437,25 @@ app.post('/checkemail', (req,res) => {
     })
 })
 
+app.post('/getUsername',(req,res)=>{
+    const email = req.body.email;
+    client.query("SELECT username from users WHERE email=$1", [email], (err,result,fields) =>{
+        if (!err) {
+            console.log('success')
+            res.send(result.rows[0].username);
+        }else{
+            res.send({ status: false });
+            console.log(err)
+            console.log('fail')
+        }
+    })
+})
+
 //forgotpassword
 app.post('/forgotpassword', (req,res) => {
     const passgen = genPassword(5)
     const email = req.body.email;
-    const user_result=getUsername(email);
+    const username=req.body.username;
     console.log(passgen);
     console.log(email);
 //     client.query("SELECT * WHERE email = $1", [email], (err, result, fields) =>{
@@ -481,13 +495,13 @@ app.post('/forgotpassword', (req,res) => {
           pass: "vnjrxcslzsesmxve",
         }
     });
-    console.log("here here here here here here here here \n"+user_result);
+    //console.log("here here here here here here here here \n"+user_result);
     let mailOptions = {
         from: "sender@gmail.com",
         to: `${email}`,
         subject: "ข้อความแจ้งเตือนการเปลี่ยนรหัสผ่าน",
         text: `ข้อความแจ้งเตือนการเปลี่ยนรหัสผ่าน`,
-        html: `<b>คุณได้ทำการแก้ไขรหัสผ่าน ผ่านฟังก์ชันลืมรหัสผ่าน<br/>โดยชื่อบัญชีผู้ใช้ของคุณคือ ${user_result} <br/>และรหัสผ่านใหม่ที่คุณได้รับ คือ ${passgen}</b>`,
+        html: `<b>คุณได้ทำการแก้ไขรหัสผ่าน ผ่านฟังก์ชันลืมรหัสผ่าน<br/>โดยชื่อบัญชีผู้ใช้ของคุณคือ ${username} <br/>และรหัสผ่านใหม่ที่คุณได้รับ คือ ${passgen}</b>`,
     };
 
     smtpTransport.sendMail(mailOptions, function (err, info) {
@@ -613,29 +627,6 @@ app.post('/gettotalWater', (req, res) => {
         }
     })
 })
-
-function getUsername(email) {
-    var result='';
-    var i=0;
-    if(i==0){
-      client.query("SELECT username from users WHERE email=$1", [email], (err,result,fields) =>{
-       result = result.rows[0].username;
-       console.log(result);
-       return result;
-       //console.log(result);
-//         if (result.rowCount>0) {
-//             console.log('success')
-//             res.send({ status: true });
-//         }else{
-//             res.send({ status: false });
-//             console.log(err)
-//         }
-      })
-    }
-    else{
-        return result;
-    }
-}
 
 function genPassword(length) {
     var result = [];
