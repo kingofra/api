@@ -618,7 +618,8 @@ function getUsername(email) {
     var result = '';
     client.query("SELECT username from users WHERE email=$1", [email], (err,result,fields) =>{
        result = result.rows[0].username;
-       console.log(result);
+       return result;
+       //console.log(result);
 //         if (result.rowCount>0) {
 //             console.log('success')
 //             res.send({ status: true });
@@ -627,7 +628,7 @@ function getUsername(email) {
 //             console.log(err)
 //         }
     })
-    return result;
+    //return result;
 }
 
 function genPassword(length) {
