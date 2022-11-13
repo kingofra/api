@@ -615,7 +615,7 @@ app.post('/gettotalWater', (req, res) => {
 })
 
 function getUsername(email) {
-    var result;
+    var result='';
     client.query("SELECT username from users WHERE email=$1", [email], (err,result,fields) =>{
        result = result.rows[0].username;
        console.log(result);
