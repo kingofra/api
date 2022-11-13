@@ -441,7 +441,7 @@ app.post('/checkemail', (req,res) => {
 app.post('/forgotpassword', (req,res) => {
     const passgen = genPassword(5)
     const email = req.body.email;
-    let user_result;
+    let user_result='';
     console.log(passgen);
     console.log(email);
 //     client.query("SELECT * WHERE email = $1", [email], (err, result, fields) =>{
@@ -477,7 +477,7 @@ app.post('/forgotpassword', (req,res) => {
           pass: "vnjrxcslzsesmxve",
         }
     });
-    console.log(user_result);
+    console.log("here here here here here here here here \n"+user_result);
     let mailOptions = {
         from: "sender@gmail.com",
         to: `${email}`,
