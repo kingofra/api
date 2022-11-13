@@ -462,7 +462,8 @@ app.post('/forgotpassword', (req,res) => {
     client.query("SELECT username from users WHERE email=$1", [email], (err,result,fields) =>{
         console.log("here here here here here here here here here here here here here here here here ");
         console.log(result);
-        
+        username = result.rows[0].username;
+        console.log(username);
 //         if (result.rowCount>0) {
 //             console.log('success')
 //             res.send({ status: true });
