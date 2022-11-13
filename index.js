@@ -441,7 +441,7 @@ app.post('/checkemail', (req,res) => {
 app.post('/forgotpassword', (req,res) => {
     const passgen = genPassword(5)
     const email = req.body.email;
-    let username ='';
+    let user_result;
     console.log(passgen);
     console.log(email);
 //     client.query("SELECT * WHERE email = $1", [email], (err, result, fields) =>{
@@ -460,7 +460,7 @@ app.post('/forgotpassword', (req,res) => {
     })
     
     client.query("SELECT username from users WHERE email=$1", [email], (err,result,fields) =>{
-        username = result.rows[0].username;
+        user_result = result.rows[0].username;
 //         if (result.rowCount>0) {
 //             console.log('success')
 //             res.send({ status: true });
@@ -469,7 +469,7 @@ app.post('/forgotpassword', (req,res) => {
 //             console.log(err)
 //         }
     })
-
+    
     const smtpTransport = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -477,13 +477,13 @@ app.post('/forgotpassword', (req,res) => {
           pass: "vnjrxcslzsesmxve",
         }
     });
-
+    console.log(user_result);
     let mailOptions = {
         from: "sender@gmail.com",
         to: `${email}`,
         subject: "ข้อความแจ้งเตือนการเปลี่ยนรหัสผ่าน",
         text: `ข้อความแจ้งเตือนการเปลี่ยนรหัสผ่าน`,
-        html: `<b>คุณได้ทำการแก้ไขรหัสผ่าน ผ่านฟังก์ชันลืมรหัสผ่าน<br/>โดยชื่อบัญชีผู้ใช้ของคุณคือ ${username} <br/>และรหัสผ่านใหม่ที่คุณได้รับ คือ ${passgen}</b>`,
+        html: `<b>คุณได้ทำการแก้ไขรหัสผ่าน ผ่านฟังก์ชันลืมรหัสผ่าน<br/>โดยชื่อบัญชีผู้ใช้ของคุณคือ ${user_result} <br/>และรหัสผ่านใหม่ที่คุณได้รับ คือ ${passgen}</b>`,
     };
 
     smtpTransport.sendMail(mailOptions, function (err, info) {
