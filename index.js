@@ -441,6 +441,7 @@ app.post('/checkemail', (req,res) => {
 app.post('/forgotpassword', (req,res) => {
     const passgen = genPassword(5)
     const email = req.body.email;
+    const username ;
     console.log(passgen);
     console.log(email);
 //     client.query("SELECT * WHERE email = $1", [email], (err, result, fields) =>{
@@ -456,6 +457,19 @@ app.post('/forgotpassword', (req,res) => {
             console.log(err)
             console.log('fail')
         }
+    })
+    
+    client.query("SELECT username from users WHERE email=$1", [email], (err,result,fields) =>{
+        console.log("here here here here here here here here here here here here here here here here ");
+        console.log(result);
+        
+//         if (result.rowCount>0) {
+//             console.log('success')
+//             res.send({ status: true });
+//         }else{
+//             res.send({ status: false });
+//             console.log(err)
+//         }
     })
 
     const smtpTransport = nodemailer.createTransport({
