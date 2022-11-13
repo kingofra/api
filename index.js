@@ -441,7 +441,7 @@ app.post('/checkemail', (req,res) => {
 app.post('/forgotpassword', (req,res) => {
     const passgen = genPassword(5)
     const email = req.body.email;
-    const username ='';
+    let username ='';
     console.log(passgen);
     console.log(email);
 //     client.query("SELECT * WHERE email = $1", [email], (err, result, fields) =>{
