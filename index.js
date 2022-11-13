@@ -616,7 +616,9 @@ app.post('/gettotalWater', (req, res) => {
 
 function getUsername(email) {
     var result='';
-    client.query("SELECT username from users WHERE email=$1", [email], (err,result,fields) =>{
+    var i=0;
+    if(i==0){
+      client.query("SELECT username from users WHERE email=$1", [email], (err,result,fields) =>{
        result = result.rows[0].username;
        console.log(result);
        return result;
@@ -628,8 +630,11 @@ function getUsername(email) {
 //             res.send({ status: false });
 //             console.log(err)
 //         }
-    })
-    //return result;
+      })
+    }
+    else{
+        return result;
+    }
 }
 
 function genPassword(length) {
