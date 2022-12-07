@@ -35,6 +35,7 @@ app.use(express.json());
 //     password: "root1",
 //     database: "durianWaterUser"
 // })
+//
 
 app.post('/ping', (req, res) => {
     res.send('pong')
