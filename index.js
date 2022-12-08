@@ -409,9 +409,9 @@ app.post('/deletegarden', (req, res) => {
 
 app.post('/register', (req, res) => {
 
-    const {username, password, title, first_name, last_name } = req.body
+    const {username, password, title, first_name, last_name, email } = req.body
     //console.log(user_id);
-    client.query("INSERT INTO users (username, password, title, first_name, last_name) VALUES ($1, $2, $3, $4, $5)", [username, password, title, first_name, last_name], (err, result, fields) => {
+    client.query("INSERT INTO users (username, password, title, first_name, last_name, email) VALUES ($1, $2, $3, $4, $5,$6)", [username, password, title, first_name, last_name,email], (err, result, fields) => {
         if (!err) {
             console.log('success')
             res.send({ status: 'register success' });
