@@ -118,7 +118,7 @@ app.post('/csv',async (req, res) => {
       service: "gmail",
       auth: {
         user: "ferkerhik@gmail.com",
-        pass: "vnjrxcslzsesmxve",
+        pass: "ieijqeitoxbviedl",
       },
     };
     const smtpTransport = nodemailer.createTransport(transport);
@@ -292,7 +292,7 @@ app.post('/csvAll',async (req, res) => {
       service: "gmail",
       auth: {
         user: "ferkerhik@gmail.com",
-        pass: "vnjrxcslzsesmxve",
+        pass: "ieijqeitoxbviedl",
       },
     };
     const smtpTransport = nodemailer.createTransport(transport);
@@ -493,7 +493,7 @@ app.post('/forgotpassword', (req,res) => {
         service: "gmail",
         auth: {
           user: "ferkerhik@gmail.com",
-          pass: "vnjrxcslzsesmxve",
+          pass: "ieijqeitoxbviedl",
         }
     });
     //console.log("here here here here here here here here \n"+user_result);
