@@ -397,7 +397,7 @@ app.put('/editInfo', (req, res) => {
     
     const {id,title, first_name, last_name, email, tel} = req.body
     console.log(id);
-    client.query("UPDATE users SET title = $2, first_name = $3, last_name = $4, email = $5, tel = $6 WHERE id =$1", [id,title, first_name, last_name, email, tel], (err, result, fields) => {
+    client.query("UPDATE users SET title = $2, first_name = $3, last_name = $4, email = $5, tel = $6 WHERE user_id =$1", [id,title, first_name, last_name, email, tel], (err, result, fields) => {
         if (!err) {
             console.log('success')
             res.send({ status: 'edit success' });
