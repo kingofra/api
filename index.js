@@ -74,6 +74,7 @@ app.post('/addaddress', (req, res) => {
         }
     })
 })
+
 //add result
 app.post('/addresult', (req, res) => {
 
@@ -382,6 +383,21 @@ app.put('/editaddress', (req, res) => {
     const {id,number, village, lane, road, subdistrict, district, province, zipcode} = req.body
     console.log(id);
     client.query("UPDATE address SET number = $2, village = $3, lane = $4, road = $5, subdistrict = $6, district = $7, province = $8, zipcode = $9 WHERE id =$1", [id,number, village, lane, road, subdistrict, district, province, zipcode], (err, result, fields) => {
+        if (!err) {
+            console.log('success')
+            res.send({ status: 'edit success' });
+        }else{
+            console.log(err)
+        }
+    })
+})
+
+// edit info
+app.put('/editInfo', (req, res) => {
+    
+    const {id,title, first_name, last_name, email, tel} = req.body
+    console.log(id);
+    client.query("UPDATE users SET title = $2, first_name = $3, last_name = $4, email = $5, tel = $6 WHERE id =$1", [id,title, first_name, last_name, email, tel], (err, result, fields) => {
         if (!err) {
             console.log('success')
             res.send({ status: 'edit success' });
