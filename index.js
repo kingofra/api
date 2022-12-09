@@ -629,6 +629,19 @@ app.post('/gettotalWater', (req, res) => {
     })
 })
 
+app.post('/profile', (req, res) => {
+
+    const user_id = req.body.user_id;
+    console.log(user_id);
+    client.query("SELECT * FROM users WHERE user_id=$1 ",[user_id], (err, result, fields) =>{
+        res.send({
+            status: true,
+            result: result});
+        console.log(result);
+    })
+})
+
+
 function genPassword(length) {
     var result = [];
     var characters =
