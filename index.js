@@ -542,7 +542,7 @@ app.post('/login', async (req, res) => {
         try {
             const result = await client.query("SELECT * FROM users WHERE username=$1 AND password=$2", [username, password])
 
-            console.log(result.rows.length);
+            console.log(result);
             if (result.rows.length > 0) {
                 console.log("suc");
                 req.body.username = username;
