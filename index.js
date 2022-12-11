@@ -2,6 +2,7 @@ const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+const jwt = require('jsonwebtoken');
 
 const { Client } = require('pg');
 
@@ -542,14 +543,17 @@ app.post('/login', async (req, res) => {
         try {
             const result = await client.query("SELECT * FROM users WHERE username=$1 AND password=$2", [username, password])
 
-            console.log(result.rows.length);
+            //console.log(result.rows.length);
+            const user_id = result.rows[0].user_id;
             if (result.rows.length > 0) {
                 console.log("suc");
                 req.body.username = username;
                 req.body.password = password;
-                res.send({
+                const token= jwt.sign({user_id: user_id},'SECRET223');
+                res.header('auth-token',token).send({
                     status: 'login success',
-                    result: result
+                    result: result,
+                    token: token
                 });
             }
             else {
