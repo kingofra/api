@@ -619,8 +619,7 @@ app.post('/history', (req, res) => {
     client.query("SELECT * FROM result WHERE user_id=$1 AND date>=$2 AND date<=$3 ",[user_id,fromDate,toDate], (err, result, fields) =>{
         res.send({
             result: result});
-        console.log
-        console.log(result);
+        console.log("here here here here here here here " + result);
     })
 })
 
