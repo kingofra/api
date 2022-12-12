@@ -455,6 +455,22 @@ app.post('/checkemail', (req,res) => {
     })
 })
 
+// checkusername
+app.post('/checkusername', (req,res) => {
+
+    const username = req.body.username;
+    client.query("SELECT username from users WHERE username=$1", [username], (err,result,fields) =>{
+        console.log(result);
+        if (result.rowCount>0) {
+            console.log('success')
+            res.send({ status: true });
+        }else{
+            res.send({ status: false });
+            console.log(err)
+        }
+    })
+})
+
 app.post('/getUsername',(req,res)=>{
     const email = req.body.email;
     client.query("SELECT username from users WHERE email=$1", [email], (err,result,fields) =>{
