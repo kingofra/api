@@ -107,7 +107,7 @@ app.post('/csv',async (req, res) => {
     }
   
     const responseWater = await client.query(`SELECT rs.result_id, rs.date ,rs.time, rs.garden_name, rs.temperature,
-                      rs.moisture_air,rs.moisture_soil,rs.rs,rs.kc,rs.radius,rs.water_volume,
+                      rs.moisture_air,rs.rs,rs.kc,rs.radius,rs.water_volume,
                       rs.watering, rs.vpd, rs.recommend
                       FROM result as rs
                       WHERE rs.result_id = $1
