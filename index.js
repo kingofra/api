@@ -79,9 +79,9 @@ app.post('/addaddress', (req, res) => {
 //add result
 app.post('/addresult', (req, res) => {
 
-    const {user_id, date, time, garden_name, temperature, moisture_air, moisture_soil, rs, kc, radius,water_volume,watering,vpd,recommend,day,month} = req.body
+    const {user_id, date, time, garden_name, temperature, moisture_air, rs, kc, radius,water_volume,watering,vpd,recommend,day,month} = req.body
     //console.log(user_id);
-    client.query("INSERT INTO result (user_id, date, time, garden_name, temperature, moisture_air, moisture_soil, rs, kc, radius,water_volume,watering,vpd,recommend,day,month) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14,$15,$16)", [user_id, date, time, garden_name, temperature, moisture_air, moisture_soil, rs, kc, radius,water_volume,watering,vpd,recommend,day,month], (err, result, fields) => {
+    client.query("INSERT INTO result (user_id, date, time, garden_name, temperature, moisture_air, rs, kc, radius,water_volume,watering,vpd,recommend,day,month) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14,$15)", [user_id, date, time, garden_name, temperature, moisture_air, rs, kc, radius,water_volume,watering,vpd,recommend,day,month], (err, result, fields) => {
         if (!err) {
             console.log('add success')
             res.send({ status: 'add success' });
@@ -244,12 +244,11 @@ async function ConvertToCSV(objArray) {
         newObj = newDetail;
       });
         const csvString = [
-          ["วันที่", "เวลา", "ชื่อสวน", "อุณหภูมิ", "ความชื้นในอากาศ", "ความชื้นในดิน", "ความเข้มของแสง", "ระยะการเจริญเติบโต", "รัศมีทรงพุ่ม", "ปริมาณน้ำจากหัวจ่ายน้ำ","ปริมาณน้ำ / ต้น", "ความแห้งของอากาศ", "คำแนะนำเพิ่มเติม"],
+          ["วันที่", "เวลา", "ชื่อสวน", "อุณหภูมิ", "ความชื้นในอากาศ", "ความเข้มของแสง", "ระยะการเจริญเติบโต", "รัศมีทรงพุ่ม", "ปริมาณน้ำจากหัวจ่ายน้ำ","ปริมาณน้ำ / ต้น", "ความแห้งของอากาศ", "คำแนะนำเพิ่มเติม"],
           ...newObj.map((item) => [
             item.date, item.time,item.garden_name,
             `${item.temperature} °C`,
             `${item.moisture_air} %`,
-            `${item.moisture_soil} %`,
             `${item.rs} Lux`,
             `${item.kc} `,
             `${item.radius} `,
