@@ -107,7 +107,7 @@ app.post('/csv',async (req, res) => {
     }
   
     const responseWater = await client.query(`SELECT rs.result_id, rs.date ,rs.time, rs.garden_name, rs.temperature,
-                      rs.moisture_air,rs.rs,rs.kc,rs.radius,rs.water_volume,
+                      rs.moisture_air,rs.eto,rs.kc,rs.radius,rs.water_volume,
                       rs.watering, rs.vpd, rs.recommend
                       FROM result as rs
                       WHERE rs.result_id = $1
@@ -244,12 +244,12 @@ async function ConvertToCSV(objArray) {
         newObj = newDetail;
       });
         const csvString = [
-          ["วันที่", "เวลา", "ชื่อสวน", "อุณหภูมิ", "ความชื้นในอากาศ", "ความเข้มของแสง", "ระยะการเจริญเติบโต", "รัศมีทรงพุ่ม", "ปริมาณน้ำจากหัวจ่ายน้ำ","ปริมาณน้ำ / ต้น", "ความแห้งของอากาศ", "คำแนะนำเพิ่มเติม"],
+          ["วันที่", "เวลา", "ชื่อสวน", "eto", "ความชื้นในอากาศ", "ความเข้มของแสง", "ระยะการเจริญเติบโต", "รัศมีทรงพุ่ม", "ปริมาณน้ำจากหัวจ่ายน้ำ","ปริมาณน้ำ / ต้น", "ความแห้งของอากาศ", "คำแนะนำเพิ่มเติม"],
           ...newObj.map((item) => [
             item.date, item.time,item.garden_name,
             `${item.temperature} °C`,
             `${item.moisture_air} %`,
-            `${item.rs} Lux`,
+            `${item.eto}`,
             `${item.kc} `,
             `${item.radius} `,
             `${item.water_volume} ลิตร / ชม.`,
