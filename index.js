@@ -489,27 +489,20 @@ app.post('/getUserid',(req,res)=>{
     const username = req.body.username;
     const password = req.body.password;
 
-       if (username && password) {
-        try {
-            const result = await client.query("SELECT user_id FROM users WHERE username=$1 AND password=$2", [username, password])
+    client.query("SELECT user_id FROM users WHERE username=$1 AND password=$2", [username, password], (err,result,fields) =>{
 
-            //console.log(result.rows.length);
-            if (result.rows.length > 0) {
-                res.send(result.rows[0]);
-            }
-            else {
-                console.log("fail");
-                res.send({ status: 'login failed' });
-            }
-        }
-        catch (e) {
-            console.log(e);
-            res.send({ status: 'error', message: e })
-        }
+     //console.log(result.rows.length);
+      if (result.rows.length > 0) {
+        res.send(result.rows[0]);
+      }
+      else {
+          console.log("fail");
+          res.send({ status: 'login failed' });
+      }
+    })
         // finally {
         //     client.end();
         // }
-    }
 })
 
 //forgotpassword
