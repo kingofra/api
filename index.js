@@ -571,12 +571,25 @@ app.post('/forgotpassword', (req,res) => {
 app.post('/forgotpasswordsms', (req,res) => {
     const sdk = require('api')('@thaibulksms/v1.0#5alni1epl6dge9p1');
     const passgen = genPassword(5)
-    var phoneno = "0627685682";
+    const mess = "รหัสใหม่ของคุณคือ" + passgen; 
+    var tel = req.body.tel;
+
+    client.query("UPDATE users SET password = $1 WHERE tel = $2", [passgen,tel], (err, result, fields) =>{
+        console.log(result);
+        if (!err) {
+            console.log('success')
+            res.send({ status: true });
+        }else{
+            res.send({ status: false });
+            console.log(err)
+            console.log('fail')
+        }
+    })
 
     sdk.auth('84TE6KHoYKwASqQxGVS2-8LZVyF5AK', '653XtTFwjUD-k6IsDH43HS-SeFRjU4');
     sdk.postSms({
-    msisdn: '0627685682',
-    message: 'test',
+    msisdn: tel,
+    message: mess,
     sender: 'Demo'
     }, {accept: 'application/json'})
     .then(function (response) {
