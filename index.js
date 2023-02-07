@@ -582,7 +582,7 @@ app.post('/forgotpasswordsms', (req,res) => {
             console.log("ss");
             var data = JSON.stringify({
             "msisdn": phoneno,
-            "sender": "SMSOTP",
+            "sender": "SMSMSA",
             "message": "ทดสอบการส่งข้อความ"
             });
 
