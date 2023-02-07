@@ -580,23 +580,10 @@ app.post('/forgotpasswordsms', (req,res) => {
     .then(({ data }) => console.log(data))
 })
 
-<<<<<<< HEAD
 // app.post('/forgotpasswordsms', (req,res) => {
 //     const passgen = genPassword(5)
 //     var phoneno = "0627685682";
 //     //var phoneno = req.body.phone;
-=======
-    try {
-        phoneno = String(phoneno)
-        console.log(phoneno);
-        if(phoneno && phoneno.length == 10) {
-            console.log("ss");
-            var data = JSON.stringify({
-            "msisdn": phoneno,
-            "sender": "Verify ID",
-            "message": "ทดสอบการส่งข้อความ"
-            });
->>>>>>> c3990a14defd29395997e95e03aed22fe8b52575
 
 //     console.log(phoneno);
 
