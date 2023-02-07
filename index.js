@@ -572,12 +572,13 @@ app.post('/forgotpasswordsms', (req,res) => {
     var phoneno = 0627685682;
     //var phoneno = req.body.phone;
 
-    console.log(phoneno)
+    console.log(phoneno);
 
     try {
         phoneno = String(phoneno)
+        console.log(phoneno);
         if(phoneno && phoneno.length == 10) {
-            
+            console.log("ss");
             var data = JSON.stringify({
             "msisdn": phoneno,
             "sender": "SMSOTP",
