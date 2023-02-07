@@ -567,6 +567,80 @@ app.post('/forgotpassword', (req,res) => {
     });
 })
 
+app.post('/forgotpasswordsms', (req,res) => {
+    const passgen = genPassword(5)
+    var phoneno = 0627685682;
+    //var phoneno = req.body.phone;
+
+    console.log(phoneno)
+
+    try {
+        phoneno = String(phoneno)
+        if(phoneno && phoneno.length == 10) {
+            
+            var data = JSON.stringify({
+            "msisdn": phoneno,
+            "sender": "SMSOTP",
+            "message": "ทดสอบการส่งข้อความ"
+            });
+
+            var config = {
+            method: 'post',
+            url: 'https://www.havesms.com/api/sms/send',
+            headers: { 
+                'Authorization': 'Bearer 5YsLHmCUCMYalTrgWxEhfHCa02s8TsfDeeSD5ZKF', 
+                'Content-Type': 'application/json'
+            },
+            data : data
+            };
+
+            axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+
+                if(response.data.error == false) {
+                    return res.status(200).json({
+                        RespCode: 200,
+                        RespMessage: 'success',
+                    })
+                }
+                else {
+                    return res.status(400).json({
+                        RespCode: 400,
+                        RespMessage: 'bad : Something is went wrong!',
+                        Log: 3
+                    })
+                }
+
+                
+            })
+            .catch(function (error) {
+                console.log(error);
+                return res.status(400).json({
+                    RespCode: 400,
+                    RespMessage: 'bad : Send otp fail',
+                    Log: 2 
+                })
+            });
+        }
+        else {
+            return res.status(400).json({
+                RespCode: 400,
+                RespMessage: 'bad : Invalid phone number',
+                Log: 1 
+            })
+        }
+    }
+    catch(error) {
+        console.log(error)
+        return res.status(400).json({
+            RespCode: 400,
+            RespMessage: 'bad',
+            Log: 0
+        })
+    }
+})
+
 // /localhost:3001/login
 app.post('/login', async (req, res) => {
 
