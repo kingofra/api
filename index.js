@@ -577,7 +577,7 @@ app.post('/forgotpasswordsms', (req,res) => {
     message: 'test',
     sender: 'Demo'
     }, {accept: 'application/json'})
-    .then(({ data }) => console.log(data))
+    .then(res.send({ status: 'ss' }))
 })
 
 // app.post('/forgotpasswordsms', (req,res) => {
