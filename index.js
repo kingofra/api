@@ -570,6 +570,8 @@ app.post('/forgotpassword', (req,res) => {
 
 app.post('/forgotpasswordsms', (req,res) => {
     const sdk = require('api')('@thaibulksms/v1.0#5alni1epl6dge9p1');
+    const passgen = genPassword(5)
+    var phoneno = "0627685682";
 
     sdk.auth('84TE6KHoYKwASqQxGVS2-8LZVyF5AK', '653XtTFwjUD-k6IsDH43HS-SeFRjU4');
     sdk.postSms({
@@ -577,7 +579,25 @@ app.post('/forgotpasswordsms', (req,res) => {
     message: 'test',
     sender: 'Demo'
     }, {accept: 'application/json'})
-    .then(res.send({ status: 'ss' }))
+    .then(function (response) {
+                console.log(JSON.stringify(response.data));
+
+                if(response.data.error == false) {
+                    return res.status(200).json({
+                        RespCode: 200,
+                        RespMessage: 'success',
+                    })
+                }
+                else {
+                    return res.status(400).json({
+                        RespCode: 400,
+                        RespMessage: 'bad : Something is went wrong!',
+                        Log: 3
+                    })
+                }
+
+                
+            })
 })
 
 // app.post('/forgotpasswordsms', (req,res) => {
