@@ -569,7 +569,7 @@ app.post('/forgotpassword', (req,res) => {
 
 app.post('/forgotpasswordsms', (req,res) => {
     const passgen = genPassword(5)
-    var phoneno = 0627685682;
+    var phoneno = "0627685682";
     //var phoneno = req.body.phone;
 
     console.log(phoneno);
