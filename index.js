@@ -569,79 +569,91 @@ app.post('/forgotpassword', (req,res) => {
 })
 
 app.post('/forgotpasswordsms', (req,res) => {
-    const passgen = genPassword(5)
-    var phoneno = "0627685682";
-    //var phoneno = req.body.phone;
+    const sdk = require('api')('@thaibulksms/v1.0#5alni1epl6dge9p1');
 
-    console.log(phoneno);
+    sdk.auth('84TE6KHoYKwASqQxGVS2-8LZVyF5AK', '653XtTFwjUD-k6IsDH43HS-SeFRjU4');
+    sdk.postSms({
+    msisdn: '0627685682',
+    message: 'test',
+    sender: 'Demo'
+    }, {accept: 'application/json'})
+    .then(({ data }) => console.log(data))
+})
 
-    try {
-        phoneno = String(phoneno)
-        console.log(phoneno);
-        if(phoneno && phoneno.length == 10) {
-            console.log("ss");
-            var data = JSON.stringify({
-            "msisdn": phoneno,
-            "sender": "SMSOTP",
-            "message": "ทดสอบการส่งข้อความ"
-            });
+// app.post('/forgotpasswordsms', (req,res) => {
+//     const passgen = genPassword(5)
+//     var phoneno = "0627685682";
+//     //var phoneno = req.body.phone;
 
-            var config = {
-            method: 'post',
-            url: 'https://www.havesms.com/api/sms/send',
-            headers: { 
-                'Authorization': 'Bearer 5YsLHmCUCMYalTrgWxEhfHCa02s8TsfDeeSD5ZKF', 
-                'Content-Type': 'application/json'
-            },
-            data : data
-            };
+//     console.log(phoneno);
 
-            axios(config)
-            .then(function (response) {
-                console.log(JSON.stringify(response.data));
+//     try {
+//         phoneno = String(phoneno)
+//         console.log(phoneno);
+//         if(phoneno && phoneno.length == 10) {
+//             console.log("ss");
+//             var data = JSON.stringify({
+//             "msisdn": phoneno,
+//             "sender": "SMSOTP",
+//             "message": "ทดสอบการส่งข้อความ"
+//             });
 
-                if(response.data.error == false) {
-                    return res.status(200).json({
-                        RespCode: 200,
-                        RespMessage: 'success',
-                    })
-                }
-                else {
-                    return res.status(400).json({
-                        RespCode: 400,
-                        RespMessage: 'bad : Something is went wrong!',
-                        Log: 3
-                    })
-                }
+//             var config = {
+//             method: 'post',
+//             url: 'https://www.havesms.com/api/sms/send',
+//             headers: { 
+//                 'Authorization': 'Bearer 5YsLHmCUCMYalTrgWxEhfHCa02s8TsfDeeSD5ZKF', 
+//                 'Content-Type': 'application/json'
+//             },
+//             data : data
+//             };
+
+//             axios(config)
+//             .then(function (response) {
+//                 console.log(JSON.stringify(response.data));
+
+//                 if(response.data.error == false) {
+//                     return res.status(200).json({
+//                         RespCode: 200,
+//                         RespMessage: 'success',
+//                     })
+//                 }
+//                 else {
+//                     return res.status(400).json({
+//                         RespCode: 400,
+//                         RespMessage: 'bad : Something is went wrong!',
+//                         Log: 3
+//                     })
+//                 }
 
                 
-            })
-            .catch(function (error) {
-                console.log(error);
-                return res.status(400).json({
-                    RespCode: 400,
-                    RespMessage: 'bad : Send otp fail',
-                    Log: 2 
-                })
-            });
-        }
-        else {
-            return res.status(400).json({
-                RespCode: 400,
-                RespMessage: 'bad : Invalid phone number',
-                Log: 1 
-            })
-        }
-    }
-    catch(error) {
-        console.log(error)
-        return res.status(400).json({
-            RespCode: 400,
-            RespMessage: 'bad',
-            Log: 0
-        })
-    }
-})
+//             })
+//             .catch(function (error) {
+//                 console.log(error);
+//                 return res.status(400).json({
+//                     RespCode: 400,
+//                     RespMessage: 'bad : Send otp fail',
+//                     Log: 2 
+//                 })
+//             });
+//         }
+//         else {
+//             return res.status(400).json({
+//                 RespCode: 400,
+//                 RespMessage: 'bad : Invalid phone number',
+//                 Log: 1 
+//             })
+//         }
+//     }
+//     catch(error) {
+//         console.log(error)
+//         return res.status(400).json({
+//             RespCode: 400,
+//             RespMessage: 'bad',
+//             Log: 0
+//         })
+//     }
+// })
 
 // /localhost:3001/login
 app.post('/login', async (req, res) => {
