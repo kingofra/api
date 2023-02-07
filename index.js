@@ -588,7 +588,8 @@ app.post('/forgotpassword', (req,res) => {
 app.post('/forgotpasswordsms', (req,res) => {
     const sdk = require('api')('@thaibulksms/v1.0#5alni1epl6dge9p1');
     const passgen = genPassword(5)
-    const mess = "รหัสใหม่ของคุณคือ" + passgen; 
+    const username=req.body.username;
+    const mess = "username ของคุณคือ: "+ username  +" และรหัสใหม่ของคุณคือ: " + passgen; 
     var tel = req.body.tel;
 
     client.query("UPDATE users SET password = $1 WHERE tel = $2", [passgen,tel], (err, result, fields) =>{
