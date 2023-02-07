@@ -489,7 +489,7 @@ app.post('/checkusername', (req,res) => {
 })
 
 app.post('/getUsername',(req,res)=>{
-    const tel = req.body.email;
+    const tel = req.body.tel;
     client.query("SELECT username from users WHERE tel=$1", [tel], (err,result,fields) =>{
         if (!err) {
             console.log('success')
