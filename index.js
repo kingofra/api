@@ -426,9 +426,9 @@ app.post('/deletegarden', (req, res) => {
 
 app.post('/register', (req, res) => {
 
-    const {username, password, title, first_name, last_name, email ,tel} = req.body
+    const {title, first_name, last_name, email ,tel} = req.body
     //console.log(user_id);
-    client.query("INSERT INTO users (username, password, title, first_name, last_name, email,tel) VALUES ($1, $2, $3, $4, $5,$6,$7)", [username, password, title, first_name, last_name,email,tel], (err, result, fields) => {
+    client.query("INSERT INTO users (title, first_name, last_name, email,tel) VALUES ($1, $2, $3, $4, $5)", [ title, first_name, last_name,email,tel], (err, result, fields) => {
         if (!err) {
             console.log('success')
             res.send({ status: 'register success' });
@@ -473,41 +473,41 @@ app.post('/checktel', (req,res) => {
 })
 
 // checkusername
-app.post('/checkusername', (req,res) => {
+// app.post('/checkusername', (req,res) => {
 
-    const username = req.body.username;
-    client.query("SELECT username from users WHERE username=$1", [username], (err,result,fields) =>{
-        console.log(result);
-        if (result.rowCount>0) {
-            console.log('success')
-            res.send({ status: true });
-        }else{
-            res.send({ status: false });
-            console.log(err)
-        }
-    })
-})
+//     const username = req.body.username;
+//     client.query("SELECT username from users WHERE username=$1", [username], (err,result,fields) =>{
+//         console.log(result);
+//         if (result.rowCount>0) {
+//             console.log('success')
+//             res.send({ status: true });
+//         }else{
+//             res.send({ status: false });
+//             console.log(err)
+//         }
+//     })
+// })
 
-app.post('/getUsername',(req,res)=>{
-    const tel = req.body.tel;
-    client.query("SELECT username from users WHERE tel=$1", [tel], (err,result,fields) =>{
-        if (!err) {
-            console.log('success')
-            res.send(result.rows[0].username);
-        }else{
-            res.send({ status: false });
-            console.log(err)
-            console.log('fail')
-        }
-    })
-})
+// app.post('/getUsername',(req,res)=>{
+//     const tel = req.body.tel;
+//     client.query("SELECT username from users WHERE tel=$1", [tel], (err,result,fields) =>{
+//         if (!err) {
+//             console.log('success')
+//             res.send(result.rows[0].username);
+//         }else{
+//             res.send({ status: false });
+//             console.log(err)
+//             console.log('fail')
+//         }
+//     })
+// })
 
 //get UserId for Register
 app.post('/getUserid',(req,res)=>{
-    const username = req.body.username;
-    const password = req.body.password;
+    const name = req.body.name;
+    const tel = req.body.tel;
 
-    client.query("SELECT user_id FROM users WHERE username=$1 AND password=$2", [username, password], (err,result,fields) =>{
+    client.query("SELECT user_id FROM users WHERE first_name=$1 AND tel=$2", [name, tel], (err,result,fields) =>{
 
      //console.log(result.rows.length);
       if (result.rows.length > 0) {
@@ -709,21 +709,21 @@ app.post('/forgotpasswordsms', (req,res) => {
 // /localhost:3001/login
 app.post('/login', async (req, res) => {
 
-    console.log('[POST] /login', req.body);
+    // console.log('[POST] /login', req.body);
     
-    const username = req.body.username;
-    const password = req.body.password;
+    const name = req.body.name;
+    const tel = req.body.tel;
 
-    if (username && password) {
+    if (name && tel) {
         try {
-            const result = await client.query("SELECT * FROM users WHERE username=$1 AND password=$2", [username, password])
+            const result = await client.query("SELECT * FROM users WHERE first_name=$1 AND tel=$2", [name, tel])
 
             //console.log(result.rows.length);
             const user_id = result.rows[0].user_id;
             if (result.rows.length > 0) {
                 console.log("suc");
-                req.body.username = username;
-                req.body.password = password;
+                req.body.name = name;
+                req.body.tel = tel;
                 const token= jwt.sign({user_id: user_id},'SECRET223');
                 res.header('auth-token',token).send({
                     status: 'login success',
