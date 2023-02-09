@@ -142,7 +142,10 @@ app.post('/csv',async (req, res) => {
       ],
     };
     smtpTransport.sendMail(mailOptions, function (err, info) {
-      if (err) console.log(err);
+      if (err) {
+        console.log(err);
+        res.status(200).json("Send Email Complete");
+    }
       else {
         console.log("send csv");
         res.status(200).json("Send Email Complete")};
