@@ -23,7 +23,7 @@ client.query('Select * from users', (err, res)=>{
     }else{
         console.log(err.message)
     }
-    // client.end();..
+    // client.end();.
 })
 
 const app = express();
