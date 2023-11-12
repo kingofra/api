@@ -724,7 +724,8 @@ app.post('/login', async (req, res) => {
         try {
             const result = await client.query("SELECT * FROM users WHERE first_name=$1 AND tel=$2", [name, tel])
 
-            //console.log(result.rows.length);
+            console.log(result.rows.length);
+            console.log(result);
             const user_id = result.rows[0].user_id;
             if (result.rows.length > 0) {
                 console.log("suc");
