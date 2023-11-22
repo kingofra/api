@@ -11,7 +11,7 @@ const client = new Client({
     host: "wateranalyze.cxbsylbmgqtz.ap-northeast-1.rds.amazonaws.com",
     user: "postgres",
     port: 5432,
-    password: "postgres",
+    password: "E8odOfVvEqsIfLCtUb1r",
     database: "postgres"
 });
 const PORT=3001
